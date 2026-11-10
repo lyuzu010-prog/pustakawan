@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Kosmik</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); box-shadow: 0 0 2px rgba(255,255,255,0.1); }
+            100% { opacity: 1; transform: scale(1.5); box-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(167, 139, 250, 0.6); }
+        }
+        body { background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%); }
+    </style>
+</head>
+<body class="h-screen w-screen overflow-hidden text-white font-sans relative flex items-center justify-center">
+    <!-- Wadah Animasi Bintang -->
+    <div id="star-container" class="absolute inset-0 z-0 overflow-hidden pointer-events-none"></div>
+
+    <div class="z-10 bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl shadow-[0_0_40px_rgba(167,139,250,0.3)] w-96 transform hover:scale-105 transition-transform duration-500">
+        <h2 class="text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Portal Kosmik</h2>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="bg-red-500/50 border border-red-500 text-sm p-3 rounded-lg mb-4">
+              {{ messages[0] }}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form action="/login" method="POST" class="space-y-4">
+            <div>
+                <label class="block text-sm text-purple-200 mb-1">Username</label>
+                <input type="text" name="username" required class="w-full px-4 py-2 bg-black/50 border border-purple-500/50 rounded-lg focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 text-white placeholder-gray-500" placeholder="astro_user">
+            </div>
+            <div>
+                <label class="block text-sm text-purple-200 mb-1">Password</label>
+                <input type="password" name="password" required class="w-full px-4 py-2 bg-black/50 border border-purple-500/50 rounded-lg focus:outline-none focus:border-purple-400 focus:ring-1 focus:ring-purple-400 text-white placeholder-gray-500" placeholder="••••••••">
+            </div>
+            <button type="submit" class="w-full py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 rounded-lg font-semibold shadow-lg shadow-purple-500/30 transition-all duration-300">Jelajahi</button>
+        </form>
+    </div>
+
+    <script>
+        const container = document.getElementById('star-container');
+        for(let i=0; i<150; i++) {
+            let star = document.createElement('div');
+            star.className = 'absolute bg-white rounded-full';
+            let size = Math.random() * 3;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.animation = `twinkle ${Math.random() * 3 + 1}s infinite alternate`;
+            container.appendChild(star);
+        }
+    </script>
+</body>
+</html>
